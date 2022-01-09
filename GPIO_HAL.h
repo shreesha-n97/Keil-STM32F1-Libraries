@@ -2,11 +2,7 @@
 #define GPIO_HAL
 #include "stm32f10x.h"
 
-//PORT CLOCK ENABLE
-/*************************************
-RCC_APB2ENR register enable bits
-*************************************/
-
+//CLOCK ENABLE
 #define CE_AF				0
 #define CE_PORTA		2		
 #define CE_PORTB		3		
@@ -62,15 +58,55 @@ typedef struct
 	uint32_t alt_func;
 	}GPIO_TYPE;
 
-
+/*************************************************************************************
+FUNCTION PROTOTYPE
 void RCC_ENABLE(uint8_t value);
 	
+AVAILABLE PARAMETER
+	- CE_AF,CE_PORTx
+**************************************************************************************/
+void RCC_ENABLE(uint8_t value);
+	
+/*************************************************************************************
+FUNCTION PROTOTYPE
 void pin_mode(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t modeType);
 	
+USABLE PARAMETER
+	- port 			=	PORTx
+	- pinNumber = x;
+	- modeType  =	INPUT_MODE,OUTPUT_02MHZ,OUTPUT_10MHZ,OUTPUT_50MHZ
+*************************************************************************************/
+void pin_mode(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t modeType);
+
+/*************************************************************************************
+FUNCTION PROTOTYPE
+void pin_config(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t configType);
+	
+USABLE PARAMETER
+	- port 				=	PORTx
+	- pinNumber 	= x;
+	- configType  =	INPUT_ANALOG,INPUT_FLOATING,INPUT_PUPD,,OUTPUT_GP_PP,OUTPUT_GP_OD,OUTPUT_AF_PP,OUTPUT_AF_OD
+*************************************************************************************/
 void pin_config(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t configType);
 
+/*************************************************************************************
+FUNCTION PROTOTYPE
 void pin_write(GPIO_TypeDef *port,uint32_t pinNumber,uint8_t state);
-	
+
+USABLE PARAMETER
+	- port 			=	PORTx
+	- pinNumber = x;
+	- state  		=	1
+*************************************************************************************/
+void pin_write(GPIO_TypeDef *port,uint32_t pinNumber,uint8_t state);
+/*************************************************************************************
+FUNCTION PROTOTYPE
+void pin_write(GPIO_TypeDef *port,uint32_t pinNumber,uint8_t state);
+
+USABLE PARAMETER
+	- port 			=	PORTx
+	- pinNumber = x;
+*************************************************************************************/	
 void pin_toggle(GPIO_TypeDef *port,uint32_t pinNumber);
 
 
