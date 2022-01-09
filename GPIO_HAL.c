@@ -23,13 +23,13 @@ void pin_mode(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t modeType)
 			break;
 			
 			case OUTPUT_02MHZ :
-				port->CRH |= 1<<MODE_B1;
-				port->CRH &= ~(1<<MODE_B2);
+				port->CRH &= (1<<MODE_B1);
+				port->CRH |= (1<<MODE_B2);
 			break;
 			
 			case OUTPUT_10MHZ :
-				port->CRH &= ~(1<<MODE_B1);
-				port->CRH |= 1<<MODE_B2;
+				port->CRH |= (1<<MODE_B1);
+				port->CRH &= ~(1<<MODE_B2);
 			break;
 			
 			case OUTPUT_50MHZ :
@@ -42,24 +42,24 @@ void pin_mode(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t modeType)
 	{
 		switch(modeType)
 		{
-			case INPUT_ANALOG | OUTPUT_GP_PP :
-				port->CRL &= ~(1<<MODE_B1);
-				port->CRL &= ~(1<<MODE_B2);
+			case INPUT_MODE :
+				port->CRH &= ~(1<<MODE_B1);
+				port->CRH &= ~(1<<MODE_B2);
 			break;
 			
-			case INPUT_FLOATING | OUTPUT_GP_OD :
-				port->CRL |= 1<<MODE_B1;
-				port->CRL &= ~(1<<MODE_B2);
+			case OUTPUT_02MHZ :
+				port->CRH &= (1<<MODE_B1);
+				port->CRH |= (1<<MODE_B2);
 			break;
 			
-			case INPUT_PUPD | OUTPUT_AF_PP :
-				port->CRL &= ~(1<<MODE_B1);
-				port->CRL |= 1<<MODE_B2;
+			case OUTPUT_10MHZ :
+				port->CRH |= (1<<MODE_B1);
+				port->CRH &= ~(1<<MODE_B2);
 			break;
 			
-			case OUTPUT_AF_OD :
-				port->CRL |= 1<<MODE_B1;
-				port->CRL |= 1<<MODE_B2;
+			case OUTPUT_50MHZ :
+				port->CRH |= 1<<MODE_B1;
+				port->CRH |= 1<<MODE_B2;
 			break;
 		}
 	}
@@ -125,9 +125,9 @@ void pin_config(GPIO_TypeDef *port, uint32_t pinNumber, uint32_t configType)
 void pin_write(GPIO_TypeDef *port,uint32_t pinNumber,uint8_t state)
 {
 	if(state)
-		port->BSRR = (1<<(pinNumber +16));  
+		port->BSRR = (1<<(pinNumber));  
 	else
-		port->BSRR = (1<<(pinNumber));	
+		port->BSRR = (1<<(pinNumber + 16));	
 }
 
 void pin_toggle(GPIO_TypeDef *port,uint32_t pinNumber)
